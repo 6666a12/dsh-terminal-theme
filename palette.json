@@ -1,0 +1,16 @@
+{
+  "--dsw-alias-bg-base": { "light": "#f9f4ec", "dark": "#191714" },
+  "--dsw-alias-bg-layer-1": { "light": "#fff9f1", "dark": "#211e1a" },
+  "--dsw-alias-bg-layer-2": { "light": "#f3ebe1", "dark": "#29241f" },
+  "--dsw-alias-bg-overlay": { "light": "#fffaf3", "dark": "#2c2721" },
+  "--dsw-alias-border-l1": { "light": "#ded1c0", "dark": "#423931" },
+  "--dsw-alias-border-l2": { "light": "#c9b7a4", "dark": "#55483d" },
+  "--dsw-alias-brand-primary": { "light": "#a24c24", "dark": "#e8a27d" },
+  "--dsw-alias-label-primary": { "light": "#30261e", "dark": "#eee4d8" },
+  "--dsw-alias-label-secondary": { "light": "#66574b", "dark": "#b9aea1" },
+  "--dsw-alias-state-error-primary": { "light": "#af302b", "dark": "#f4897d" },
+  "--dsw-alias-state-idle-primary": { "light": "#6b6258", "dark": "#aaa094" },
+  "--dsw-alias-state-success-primary": { "light": "#3b692f", "dark": "#a6c782" },
+  "--dsw-alias-state-warn-primary": { "light": "#865012", "dark": "#edbe75" },
+  "--dsw-specific-sidebar-fill": { "light": "#f1e9dd", "dark": "#201c18" }
+}

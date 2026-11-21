@@ -1,0 +1,281 @@
+/* Terminal chrome; leave the renderer, equation glyphs, and modal controls intact. */
+body[data-dsh-terminal] {
+  --dsh-terminal-mono: "Cascadia Mono", "Cascadia Code", Consolas, "JetBrains Mono", "SFMono-Regular", Menlo, "Sarasa Mono SC", "Noto Sans Mono CJK SC", "Microsoft YaHei UI", monospace;
+  --dsh-terminal-gutter: 1.7em;
+  --dsh-terminal-accent: #924921;
+  --dsh-terminal-code: #f2ede6;
+  --dsh-terminal-line: #cdbdad;
+  --dsh-terminal-active: #e9dfd3;
+  --dsh-terminal-keyword: #673ab7;
+  --dsh-terminal-string: #9d3219;
+  --dsh-terminal-template: #8b341c;
+  --dsh-terminal-number: #305f3b;
+  --dsh-terminal-literal: #145391;
+  --dsh-terminal-function: #725314;
+  --dsh-terminal-type: #0a6861;
+  --dsh-terminal-parameter: #185e80;
+  --dsh-terminal-comment: #546a4d;
+  --dsh-terminal-regexp: #962c60;
+  --dsh-terminal-inserted: #2f6338;
+  --dsh-terminal-deleted: #a73632;
+  --dsh-terminal-changed: #775311;
+  --dsh-terminal-punctuation: #62574d;
+}
+
+body[data-dsh-terminal][data-ds-dark-theme] {
+  --dsh-terminal-accent: #e8a27d;
+  --dsh-terminal-code: #201e1b;
+  --dsh-terminal-line: #4a4036;
+  --dsh-terminal-active: #2c2721;
+  --dsh-terminal-keyword: #c586c0;
+  --dsh-terminal-string: #ce9178;
+  --dsh-terminal-template: #e3a589;
+  --dsh-terminal-number: #b5cea8;
+  --dsh-terminal-literal: #569cd6;
+  --dsh-terminal-function: #dcdcaa;
+  --dsh-terminal-type: #4ec9b0;
+  --dsh-terminal-parameter: #9cdcfe;
+  --dsh-terminal-comment: #88a276;
+  --dsh-terminal-regexp: #d99aac;
+  --dsh-terminal-inserted: #a9ce88;
+  --dsh-terminal-deleted: #f4948a;
+  --dsh-terminal-changed: #e7bf73;
+  --dsh-terminal-punctuation: #c0b7ad;
+}
+
+/* Deliberately narrower than the whole app: no square corners on window
+   controls, media, menu portals, settings dialogs, or consent UI. */
+body[data-dsh-terminal] :is([data-chat-flow], [data-composer-card], [data-dsh-sidebar-root], [data-conversation-header-leading], [data-conversation-tabs], .wSkVaW_crumbs) {
+  --dsw-font-family: var(--dsh-terminal-mono);
+  --ds-font-family: var(--dsh-terminal-mono);
+  --ds-font-family-code: var(--dsh-terminal-mono);
+  font-family: var(--dsh-terminal-mono);
+}
+
+body[data-dsh-terminal] :is([data-chat-flow], [data-composer-card], [data-slot="sidebar.workspaces"], [data-conversation-tabs]) {
+  --dsw-radius-sm: 1px;
+  --dsw-radius-md: 1px;
+  --dsw-radius-lg: 1px;
+  --dsw-radius-xl: 1px;
+}
+
+body[data-dsh-terminal] :is([data-slot="sidebar.workspaces"], [data-conversation-tabs], .wSkVaW_crumbs) :is(button, input),
+body[data-dsh-terminal] [data-chat-flow] :is(._markdown_1ypvv_5, h1, h2, h3, h4, h5, h6, td, th, button[aria-expanded]) {
+  font-family: var(--dsh-terminal-mono);
+}
+
+body[data-dsh-terminal] [data-dsh-sidebar-root] :is(.hHd-Xa_newSession, .hHd-Xa_iconButton),
+body[data-dsh-terminal] [data-conversation-tabs] button,
+body[data-dsh-terminal] .wSkVaW_crumbs button {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body[data-dsh-terminal] [data-dsh-sidebar-root] .hHd-Xa_newSession {
+  border-color: transparent;
+  background: transparent;
+  color: var(--dsh-terminal-accent);
+  font-family: var(--dsh-terminal-mono);
+}
+
+body[data-dsh-terminal] [data-dsh-sidebar-root] .hHd-Xa_newSession:hover { background: var(--dsh-terminal-active); }
+
+/* Keep the original chat tree, scrolling and action elements. */
+body[data-dsh-terminal] [data-chat-flow] :is(.Sixlwa_userRow, .hWmORq_root) {
+  min-width: 0;
+  padding-inline-start: var(--dsh-terminal-gutter);
+  position: relative;
+}
+
+body[data-dsh-terminal] [data-chat-flow] .Sixlwa_userRow { align-items: flex-start; padding-block-start: 6px; }
+body[data-dsh-terminal] [data-chat-flow] .Sixlwa_userStack { max-width: 100%; align-items: flex-start; gap: 4px; }
+body[data-dsh-terminal] [data-chat-flow] .Sixlwa_bubble { background: transparent; border-radius: 0; padding: 0; }
+body[data-dsh-terminal] [data-chat-flow] :is([data-pending-steering], [data-submission-echo]) .Sixlwa_bubble {
+  border-inline-start: 1px dashed var(--dsh-terminal-line);
+  padding-inline-start: 6px;
+}
+
+body[data-dsh-terminal] [data-chat-flow] :is(.Sixlwa_userRow, .hWmORq_root)::before {
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--dsh-terminal-accent);
+  font: 700 .88em / calc(24px + var(--dsh-content-font-delta, 0px)) var(--dsh-terminal-mono);
+  pointer-events: none;
+  user-select: none;
+}
+
+body[data-dsh-terminal] [data-chat-flow] .Sixlwa_userRow::before { content: "❯" / ""; inset-block-start: 6px; }
+body[data-dsh-terminal] [data-chat-flow] .hWmORq_root:has(> .hWmORq_body > :not([data-turn-process-inline]):not([data-step-process]))::before {
+  content: "●" / "";
+  inset-block-start: 0;
+  font-size: .62em;
+}
+
+body[data-dsh-terminal] [data-chat-flow] .hWmORq_body { gap: 10px; }
+body[data-dsh-terminal] [data-chat-flow] .hWmORq_body > * { min-width: 0; }
+
+/* One guide for each process group, not separate boxes around its tool rows. */
+body[data-dsh-terminal] [data-chat-flow] [data-step-process] {
+  border-inline-start: 1px solid var(--dsh-terminal-line);
+  padding-inline-start: 8px;
+  margin-inline-start: .45em;
+  min-width: 0;
+}
+body[data-dsh-terminal] [data-chat-flow] [data-chat-flow-kind="tool-call"] { min-width: 0; padding-inline-start: .45em; }
+body[data-dsh-terminal] [data-chat-flow] [data-step-process] [data-chat-flow-kind="tool-call"] { padding-inline-start: 0; }
+
+/* The first disclosure only: opening a process summary reveals its rows in
+   the outer transcript, without its native min(400px, 50vh) scroll box.
+   Keep the native hidden/collapse behavior and every nested tool disclosure. */
+body[data-dsh-terminal] [data-chat-flow] [data-step-process] > [data-step-process-body]:not([hidden]) {
+  max-block-size: none;
+  max-height: none;
+  overflow: visible;
+  scrollbar-gutter: auto;
+  mask-image: none;
+}
+
+body[data-dsh-terminal] [data-chat-flow] [data-message-attachments] :is(button, img) { border-radius: 0; }
+
+/* Widen the main conversation and its linked dock together. DSH sets the
+   measured column and optional drag preference; embedded views keep theirs. */
+body[data-dsh-terminal] [data-conversation-content][data-content-phase="active"]:not(.wSkVaW_embeddedBody) {
+  --dsh-chat-content-width: var(--dsh-chat-user-width, clamp(680px, calc(var(--dsh-conversation-column-width, 0px) * .78), 1140px));
+}
+
+/* The same scroll owner ends at the dock. The dock stays its DOM child
+   for DSH's refs and events but is positioned against the outer container. */
+body[data-dsh-terminal] [data-conversation-content][data-dsh-terminal-viewport] > [data-conversation-scroll]:not(:has([data-conversation-composer-overlay])) {
+  position: static;
+  margin-block-end: var(--dsh-terminal-dock-size);
+}
+body[data-dsh-terminal] [data-conversation-content][data-dsh-terminal-viewport] > [data-conversation-scroll]:not(:has([data-conversation-composer-overlay])) > [data-composer-seat] {
+  position: absolute;
+  inset-block: calc(100% - var(--dsh-terminal-dock-size)) auto;
+  left: 0;
+  right: calc(2px + var(--dsh-terminal-scrollbar-size, 0px));
+  background: transparent;
+}
+body[data-dsh-terminal] [data-dsh-terminal-viewport] > [data-conversation-scroll]:not(:has([data-conversation-composer-overlay])) > [data-composer-seat] :is([data-composer-card], .lXshSW_root),
+body[data-dsh-terminal] [data-dsh-terminal-viewport] > [data-conversation-scroll]:not(:has([data-conversation-composer-overlay])) > [data-composer-seat] [data-queue-dock] ._7yHdaG_panel::before,
+body[data-dsh-terminal] [data-composer-seat] [data-goal-bar] > .nLMEza_bar::before {
+  background: transparent;
+  backdrop-filter: none;
+}
+body[data-dsh-terminal] [data-dsh-terminal-viewport] > [data-conversation-scroll] > [data-composer-seat] :is(.lXshSW_root, [data-queue-dock] ._7yHdaG_panel),
+body[data-dsh-terminal] [data-composer-seat] [data-goal-bar] > .nLMEza_bar {
+  border-radius: 0;
+  box-shadow: none;
+}
+body[data-dsh-terminal] [data-dsh-terminal-viewport] > [data-conversation-scroll] > [data-composer-seat] [data-queue-dock] ._7yHdaG_panel::after {
+  border: 0;
+}
+body[data-dsh-terminal] [data-composer-seat] [data-goal-bar] .nLMEza_iconBtn { border-radius: 0; }
+
+/* The original offsets subtract the dock; it already sits outside this viewport. */
+body[data-dsh-terminal] [data-dsh-terminal-viewport] > [data-conversation-scroll]:not(:has([data-conversation-composer-overlay])) .eGxaPq_frame {
+  --turn-rail-band: var(--dsh-conversation-viewport-height, 100dvh);
+}
+body[data-dsh-terminal] [data-dsh-terminal-viewport] > [data-conversation-scroll]:not(:has([data-conversation-composer-overlay])) .EvIC1a_toBottomSlot {
+  bottom: 16px;
+}
+
+/* Safe backing during mount and for any unmatched third-party chat layout. */
+body[data-dsh-terminal] [data-conversation-scroll] > [data-composer-seat] {
+  background: var(--dsw-alias-bg-base);
+}
+
+body[data-dsh-terminal] [data-composer-card] {
+  border-block-start: 1px solid var(--dsh-terminal-line);
+  border-radius: 0;
+  background: var(--dsw-alias-bg-base);
+  box-shadow: none;
+  gap: 4px;
+}
+body[data-dsh-terminal] [data-composer-card]:focus-within { border-block-start-color: var(--dsh-terminal-accent); }
+
+body[data-dsh-terminal] [data-composer-card] > .uV2eYG_promptRow::before {
+  content: "❯" / "";
+  color: var(--dsh-terminal-accent);
+  flex: none;
+  width: 1em;
+  padding-block-start: 4px;
+  padding-inline-start: .35em;
+  pointer-events: none;
+  user-select: none;
+}
+
+body[data-dsh-terminal] [data-composer-card] :is([data-composer-input], [data-composer-placeholder], .uV2eYG_row button) {
+  font-family: var(--dsh-terminal-mono);
+}
+body[data-dsh-terminal] [data-composer-card] .uV2eYG_row button { border-radius: 0; }
+body[data-dsh-terminal] [data-composer-card] :is(.uV2eYG_add, .uV2eYG_primary) { background: transparent; }
+body[data-dsh-terminal] [data-composer-card] .uV2eYG_primary { color: var(--dsh-terminal-accent); }
+body[data-dsh-terminal] [data-composer-card] :is(.uV2eYG_add, .uV2eYG_primary):hover:not(:disabled) { background: var(--dsh-terminal-active); }
+
+/* A flat source viewer. The native banner, wrap toggle and copy stay intact. */
+body[data-dsh-terminal] [data-chat-flow] .md-code-block {
+  --dsw-alias-markdown-code-block: var(--dsh-terminal-code);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-alias-bg-base);
+  --dsw-radius-lg: 0px;
+  border-radius: 0;
+}
+body[data-dsh-terminal] [data-chat-flow] .md-code-block [data-code-block-banner] {
+  border-block-end: 1px solid var(--dsh-terminal-line);
+  padding-block: 4px;
+}
+body[data-dsh-terminal] [data-chat-flow] .md-code-block [data-code-block-banner] > :first-child { color: var(--dsw-alias-label-secondary); }
+body[data-dsh-terminal] [data-chat-flow] :is([data-code-block-banner], pre, code) {
+  font-family: var(--dsh-terminal-mono);
+  tab-size: 4;
+}
+body[data-dsh-terminal] [data-chat-flow] ._markdown_1ypvv_5 :not(pre) > code {
+  border-color: transparent;
+  border-radius: 0;
+}
+
+/* DSH uses native Shiki grammars for recognized/marked source. These match
+   actual Shiki categories rather than assigning colors by text spelling. */
+body[data-dsh-terminal] [data-chat-flow] pre.shiki {
+  --shiki-foreground: var(--dsw-alias-label-primary);
+  --shiki-background: var(--dsh-terminal-code);
+  --shiki-token-keyword: var(--dsh-terminal-keyword);
+  --shiki-token-string: var(--dsh-terminal-string);
+  --shiki-token-string-expression: var(--dsh-terminal-template);
+  --shiki-token-comment: var(--dsh-terminal-comment);
+  --shiki-token-constant: var(--dsh-terminal-number);
+  --shiki-token-function: var(--dsh-terminal-function);
+  --shiki-token-link: var(--dsh-terminal-parameter);
+  --shiki-token-parameter: var(--dsh-terminal-parameter);
+  --shiki-token-punctuation: var(--dsh-terminal-punctuation);
+  --shiki-token-inserted: var(--dsh-terminal-inserted);
+  --shiki-token-deleted: var(--dsh-terminal-deleted);
+  --shiki-token-changed: var(--dsh-terminal-changed);
+}
+
+/* Browser text ranges from the fallback grammar, not added DOM spans. */
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-keyword) { color: var(--dsh-terminal-keyword); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-type) { color: var(--dsh-terminal-type); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-literal) { color: var(--dsh-terminal-literal); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-number) { color: var(--dsh-terminal-number); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-string) { color: var(--dsh-terminal-string); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-regexp) { color: var(--dsh-terminal-regexp); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-comment) { color: var(--dsh-terminal-comment); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-function) { color: var(--dsh-terminal-function); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-parameter) { color: var(--dsh-terminal-parameter); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-inserted) { color: var(--dsh-terminal-inserted); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-deleted) { color: var(--dsh-terminal-deleted); }
+body[data-dsh-terminal] [data-chat-flow] pre > code::highlight(dsh-terminal-syntax-punctuation) { color: var(--dsh-terminal-punctuation); }
+
+/* Preserve KaTeX fonts/math semantics and constrain only display width. */
+body[data-dsh-terminal] [data-chat-flow] .katex-display {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+body[data-dsh-terminal] [data-chat-flow] .katex-display > .katex { min-inline-size: max-content; }
+
+@media (forced-colors: active) {
+  body[data-dsh-terminal] [data-chat-flow] :is(.Sixlwa_userRow, .hWmORq_root)::before,
+  body[data-dsh-terminal] [data-composer-card] > .uV2eYG_promptRow::before { color: CanvasText; }
+}
